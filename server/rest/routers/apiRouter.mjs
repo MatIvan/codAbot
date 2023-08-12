@@ -3,8 +3,9 @@
 import { Router } from "express";
 const router = Router();
 
-import { login } from "../controller/apiController.mjs";
+import { login, logout } from "../controller/apiController.mjs";
 
 router.post("/login", login);
+router.get("/logout", logout);
 
 export default router;

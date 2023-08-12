@@ -19,7 +19,7 @@ const log = getLogger('AUTH');
 
 /**
  * @param {Request} req 
- * @returns {Token} token
+ * @returns {string} token
  */
 function getHeaderToken(req) {
     const authHeader = req.headers.authorization;
@@ -42,18 +42,33 @@ function getHeaderToken(req) {
  * @returns 
  */
 function auth(req, role) {
-    const authSecret = getHeaderToken(req);
-    const payloadRaw = JWT.verify(authSecret, 'SuperAdminParol');
-    /** @type {TokenPayload} */
-    const payload = JSON.parse(payloadRaw);
-    const user = getUserByLogin(payload.login);
+    const user = getUserByToken(req, true);
     if (!user) {
-        throw new Error('User not found: ' + payload.login);
+        throw new Error('User not found');
     }
     if (user.roles.indexOf(role) < 0) {
         throw new Error('Access deny by role');
     }
     req['user'] = user;
+}
+
+/**
+ * @param {Request} req
+ * @param {boolean} require
+ */
+function getUserByToken(req, require) {
+    try {
+        const authSecret = getHeaderToken(req);
+        const payloadRaw = JWT.verify(authSecret, 'SuperAdminParol');
+        const payload = payloadRaw.payload;
+        return getUserByLogin(payload.login);
+    } catch (e) {
+        if (require) {
+            log.error('getUserByToken:', e);
+            throw e;
+        }
+    }
+    return null;
 }
 
 function tryAuth(req, res, next, role) {
@@ -70,12 +85,14 @@ function tryAuth(req, res, next, role) {
 export {
     gameFilter,
     adminFilter,
+    authFilter,
 }
 
 /**
  * @type {RequestHandler}
  */
 function gameFilter(req, res, next) {
+    log.debug('gameFilter');
     tryAuth(req, res, next, 'user');
 }
 
@@ -83,5 +100,16 @@ function gameFilter(req, res, next) {
  * @type {RequestHandler}
  */
 function adminFilter(req, res, next) {
+    log.debug('adminFilter');
     tryAuth(req, res, next, 'admin');
+}
+
+/**
+ * @type {RequestHandler}
+ */
+function authFilter(req, res, next) {
+    log.debug('authFilter');
+    const user = getUserByToken(req, false);
+    req['user'] = user;
+    next();
 }

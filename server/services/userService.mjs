@@ -2,6 +2,8 @@
 import { getUserByLogin } from '../repository/db.mjs';
 import JWT from 'jsonwebtoken';
 const { sign } = JWT;
+import { getLogger } from '../libs/log.mjs';
+const log = getLogger('UserService');
 
 /**
  * @typedef {import('../repository/db.mjs').Role} Role;
@@ -56,7 +58,19 @@ function login(userCredential) {
         token: generateRawToken(userEntity)
     }
     usersOnline.set(userEntity.login, token);
+    log.info('Login: ', userLogin);
     return token;
+}
+
+/**
+ * @param {string} userLogin
+ */
+function logout(userLogin) {
+    if (!userLogin) {
+        return;
+    }
+    usersOnline.delete(userLogin);
+    log.info('Logout: ', userLogin);
 }
 
 /**
@@ -75,6 +89,7 @@ function generateRawToken(userEntity) {
     return sign({ payload, }, signature, { expiresIn: expiration });
 }
 
-export {
-    login
+export default {
+    login,
+    logout
 }

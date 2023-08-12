@@ -1,11 +1,19 @@
 import React from 'react';
 import './UserForm.css';
 
-function UserForm({ user }) {
+function logoutUser(token) {
+    return fetch('/api/logout', {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    });
+}
 
-    const handleLogout = async e => {
-        //TODO logout
-        console.log('logout');
+function UserForm({ user, token, setToken }) {
+    const handleLogout = e => {
+        e.preventDefault();
+        logoutUser(token);
+        setToken(null);
     }
     return (
         <div className='form user-form'>

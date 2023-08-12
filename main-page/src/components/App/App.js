@@ -22,7 +22,9 @@ function App() {
   return (
     <div>
       <UserForm
-        user={user} />
+        user={user}
+        token={token}
+        setToken={setToken} />
     </div>
   );
 }
