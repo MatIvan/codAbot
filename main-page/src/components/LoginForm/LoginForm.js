@@ -8,7 +8,7 @@ async function loginUser(userData) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData)
-    });
+    }).then(resp => resp.json());
 }
 
 function LoginForm({ setToken }) {
@@ -25,7 +25,8 @@ function LoginForm({ setToken }) {
     }
 
     return (
-        <form className='login-form' onSubmit={handleSubmint}>
+        <form className='form login-form' onSubmit={handleSubmint}>
+            <h1>Login</h1>
             <label htmlFor="userName">Name</label>
             <input
                 id="userName"

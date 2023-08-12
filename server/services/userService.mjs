@@ -16,7 +16,10 @@ const { sign } = JWT;
 
 /**
  * @typedef {string} Login
- * @typedef {string} Token
+ */
+/**
+ * @typedef {object} Token
+ * @property {string} token
  */
 
 /**
@@ -49,16 +52,18 @@ function login(userCredential) {
         throw new Error(`Access deny: ` + userLogin);
     }
 
-    const token = generateToken(userEntity);
+    const token = {
+        token: generateRawToken(userEntity)
+    }
     usersOnline.set(userEntity.login, token);
     return token;
 }
 
 /**
  * @param {UserEntity} userEntity
- * @returns {Token} token
+ * @returns {string} tokenRaw
  */
-function generateToken(userEntity) {
+function generateRawToken(userEntity) {
     /** @type {TokenPayload} */
     const payload = {
         login: userEntity.login,

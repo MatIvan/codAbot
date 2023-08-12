@@ -1,14 +1,10 @@
-.login-form {
+.user-form {
     width: 200px;
     margin: 20px;
     padding: 10px;
 }
 
-.login-form label{
-    margin-top: 10px;
-}
-
-.submit-btn{
+.logout-btn {
     margin-top: 20px;
     width: 100px;
     align-self: center;
