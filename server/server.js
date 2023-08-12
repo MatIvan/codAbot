@@ -1,7 +1,7 @@
 //@ts-check
 
 import express from 'express';
-import { authFilter, adminFilter } from './rest/filter/auth.mjs';
+import { gameFilter, adminFilter } from './rest/filter/tokenFilter.mjs';
 import { loggerFilter } from './rest/filter/loggerFilter.mjs';
 
 import adminRouter from './rest/routers/adminRouter.mjs';
@@ -19,7 +19,7 @@ app.use('/', express.static(process.cwd() + '/web-pages/main'));
 
 app.use('/api', apiRouter);
 
-app.use('/game/*', authFilter);
+app.use('/game/*', gameFilter);
 app.use('/game', express.static(process.cwd() + '/web-pages/game'));
 app.use('/game/api', gameRouter);
 

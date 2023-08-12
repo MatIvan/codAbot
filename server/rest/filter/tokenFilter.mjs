@@ -68,14 +68,14 @@ function tryAuth(req, res, next, role) {
 }
 
 export {
-    authFilter,
+    gameFilter,
     adminFilter,
 }
 
 /**
  * @type {RequestHandler}
  */
-function authFilter(req, res, next) {
+function gameFilter(req, res, next) {
     tryAuth(req, res, next, 'user');
 }
 
