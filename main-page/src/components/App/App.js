@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
+
 import LoginForm from '../LoginForm/LoginForm'
 import UserForm from '../UserForm/UserForm'
+import Navigator from '../Navigator/Navigator'
+
 import useToken from '../../hooks/useToken';
 
 function parseJwt(tokenRaw) {
+  if (!tokenRaw) {
+    return null;
+  }
   var base64Url = tokenRaw.split('.')[1];
   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
@@ -15,16 +21,20 @@ function parseJwt(tokenRaw) {
 
 function App() {
   const { token, setToken } = useToken();
+  const user = parseJwt(token)?.payload;
+
+  const body = [];
+  body.push(<Navigator userRoles={user?.roles} />);
+
   if (!token) {
-    return <LoginForm setToken={setToken} />
+    body.push(<LoginForm setToken={setToken} />);
+  } else {
+    body.push(<UserForm user={user} token={token} setToken={setToken} />);
   }
-  const user = parseJwt(token).payload;
+
   return (
     <div>
-      <UserForm
-        user={user}
-        token={token}
-        setToken={setToken} />
+      {body}
     </div>
   );
 }

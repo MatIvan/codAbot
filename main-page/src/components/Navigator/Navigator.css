@@ -1,0 +1,11 @@
+.navigator-form {
+    margin: 20px;
+    padding: 10px;
+    width: 200px;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.navigator-link {
+    margin: 4px;
+}
