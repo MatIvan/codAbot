@@ -6,10 +6,11 @@ import UserForm from '../UserForm/UserForm'
 import Navigator from '../Navigator/Navigator'
 
 import AuthService from '../../services/AuthService';
+import { hooks } from '../../services/HooksManager';
 
 function App() {
   const [user, setUser] = useState();
-  AuthService.hooks.setUser = setUser;
+  hooks.user = setUser;
 
   return (
     <div>
