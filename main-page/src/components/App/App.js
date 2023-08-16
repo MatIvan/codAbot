@@ -9,7 +9,7 @@ import AuthService from '../../services/AuthService';
 
 function App() {
   const [user, setUser] = useState();
-  AuthService.saveUserHook(setUser);
+  AuthService.hooks.setUser = setUser;
 
   return (
     <div>

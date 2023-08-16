@@ -1,5 +1,5 @@
 //@ts-check
-
+import Storage from './StorageService';
 const BASE_URL = "http://localhost:1337";
 
 /**
@@ -16,24 +16,8 @@ const BASE_URL = "http://localhost:1337";
 
 /** @type User | null */
 let currentUser = null;
-let setUserHook = null;
-
-/**
- * @param {string} token
- */
-function saveToken(token) {
-    sessionStorage.setItem('token', token);
-}
-
-/**
- * @returns {string | null} token
- */
-function getToken() {
-    return sessionStorage.getItem('token');
-}
-
-function cleanToken() {
-    return sessionStorage.removeItem('token');
+let hooks = {
+    setUser: null
 }
 
 /**
@@ -68,8 +52,8 @@ function login(login, password) {
 }
 
 function logout() {
-    const token = getToken();
-    cleanToken();
+    const token = Storage.getToken();
+    Storage.cleanToken();
     if (token) {
         fetch(BASE_URL + '/api/logout', {
             headers: {
@@ -85,7 +69,7 @@ function logout() {
  */
 function onNewToken(tokenObject) {
     const { token } = tokenObject;
-    saveToken(token);
+    Storage.saveToken(token);
     const user = parseUser(token);
     hookUser(user);
 }
@@ -95,20 +79,18 @@ function onNewToken(tokenObject) {
  */
 function hookUser(newUser) {
     currentUser = newUser;
-    if (!setUserHook) {
+    if (!hooks.setUser) {
         console.warn('AuthService: no hook for User.');
         return;
     }
     // @ts-ignore
-    setUserHook(newUser);
-    setUserHook = null;
+    hooks.setUser(newUser);
+    hooks.setUser = null;
 }
 
 export default {
     currentUser,
-    saveUserHook: (hook) => {
-        setUserHook = hook;
-    },
+    hooks,
     login,
     logout,
 }
