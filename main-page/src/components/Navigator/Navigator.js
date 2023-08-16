@@ -42,7 +42,10 @@ function Navigator({ userRoles }) {
     const links = [];
     urls.forEach(url => {
         links.push(
-            <a className='navigator-link' href={url[0]}>{url[1]}</a>
+            <a key={'navi-key-' + url[1]}
+                className='navigator-link'
+                href={url[0]}>{url[1]}
+            </a>
         )
     });
     return (

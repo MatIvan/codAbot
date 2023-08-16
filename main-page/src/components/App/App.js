@@ -5,36 +5,23 @@ import LoginForm from '../LoginForm/LoginForm'
 import UserForm from '../UserForm/UserForm'
 import Navigator from '../Navigator/Navigator'
 
-import useToken from '../../hooks/useToken';
-
-function parseJwt(tokenRaw) {
-  if (!tokenRaw) {
-    return null;
-  }
-  var base64Url = tokenRaw.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-  return JSON.parse(jsonPayload);
-}
+import AuthService from '../../services/AuthService';
 
 function App() {
-  const { token, setToken } = useToken();
-  const user = parseJwt(token)?.payload;
-
-  const body = [];
-  body.push(<Navigator userRoles={user?.roles} />);
-
-  if (!token) {
-    body.push(<LoginForm setToken={setToken} />);
-  } else {
-    body.push(<UserForm user={user} token={token} setToken={setToken} />);
-  }
+  const [user, setUser] = useState();
+  AuthService.saveUserHook(setUser);
 
   return (
     <div>
-      {body}
+      <Navigator userRoles={user?.roles} />
+      {user ? (
+        <UserForm
+          user={user}
+          onLogoutClick={() => { AuthService.logout() }} />
+      ) : (
+        <LoginForm
+          onLoginClick={(login, pass) => { AuthService.login(login, pass) }} />
+      )}
     </div>
   );
 }

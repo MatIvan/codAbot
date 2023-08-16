@@ -1,5 +1,5 @@
 //@ts-check
-
+import cors from 'cors';
 import express from 'express';
 import { gameFilter, adminFilter, authFilter } from './rest/filter/tokenFilter.mjs';
 import { loggerFilter } from './rest/filter/loggerFilter.mjs';
@@ -12,6 +12,7 @@ import { getLogger } from './libs/log.mjs';
 const log = getLogger('SERVER');
 
 var app = express();
+app.use(cors());
 app.use(express.json());
 
 app.use(loggerFilter);

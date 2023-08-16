@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
 
-async function loginUser(userData) {
-    return fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    }).then(resp => resp.json());
-}
-
-function LoginForm({ setToken }) {
-    const [username, setUserName] = useState();
+function LoginForm({ onLoginClick }) {
+    const [login, setLogin] = useState();
     const [password, setPassword] = useState();
 
     const handleSubmint = async e => {
         e.preventDefault();
-        const token = await loginUser({
-            login: username,
-            password
-        });
-        setToken(token);
+        onLoginClick(login, password);
     }
 
     return (
@@ -31,7 +17,7 @@ function LoginForm({ setToken }) {
             <input
                 id="userName"
                 type="text"
-                onChange={e => setUserName(e.target.value)} />
+                onChange={e => setLogin(e.target.value)} />
             <label htmlFor="userPass">Password</label>
             <input
                 id="userPass"
