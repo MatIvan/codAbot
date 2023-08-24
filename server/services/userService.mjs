@@ -42,7 +42,8 @@ function login(userCredential) {
     const userLogin = userCredential.login;
     const userPass = userCredential.password;
     if (!!usersOnline.get(userLogin)) {
-        throw new Error('User allready online:' + userLogin);
+        log.info('User allready login. Refresh.');
+        usersOnline.delete(userLogin);
     };
 
     const userEntity = getUserByLogin(userLogin);

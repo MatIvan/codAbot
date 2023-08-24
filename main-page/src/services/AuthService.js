@@ -69,7 +69,14 @@ function logout() {
     hooks.user(null);
 }
 
+function getStrageUser() {
+    const token = Storage.getToken();
+    console.log('!');
+    return token && parseUser(token);
+}
+
 export default {
     login,
     logout,
+    getStrageUser,
 }
