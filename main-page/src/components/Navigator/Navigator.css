@@ -7,5 +7,18 @@
 }
 
 .navigator-link {
-    margin: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.navigator-link:hover {
+    background-color: #858585;
+}
+
+.navigator-link-selected {
+    font-weight: bold;
+    background-color: #565656;
+    color: white;
 }

@@ -60,6 +60,7 @@ function getUserByToken(req, require) {
     try {
         const authSecret = getHeaderToken(req);
         const payloadRaw = JWT.verify(authSecret, 'SuperAdminParol');
+        // @ts-ignore
         const payload = payloadRaw.payload;
         return getUserByLogin(payload.login);
     } catch (e) {

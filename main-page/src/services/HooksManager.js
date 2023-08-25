@@ -1,12 +1,32 @@
+//@ts-check
 const hooksMap = {};
 
+/**
+ * @param {Function} hook
+ */
 function wrap(hook) {
-    return (value) => {
+    return (/** @type {any} */ value) => {
         hook && hook(value);
     };
 }
 
-export const hooks = {
-    set user(hook) { hooksMap.user = wrap(hook) },
-    get user() { return hooksMap.user },
+/**
+ * @param {string} name
+ * @param {Function} hook
+ */
+function setHook(name, hook) {
+    hooksMap[name] = wrap(hook);
+}
+
+/**
+ * @param {string} name
+ * @param {any} value
+ */
+function fire(name, value) {
+    hooksMap[name] && hooksMap[name](value);
+}
+
+export default {
+    setHook,
+    fire
 };

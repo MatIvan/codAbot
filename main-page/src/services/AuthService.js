@@ -1,6 +1,6 @@
 //@ts-check
 import Storage from './StorageService';
-import { hooks } from './HooksManager';
+import HooksManager from './HooksManager';
 const BASE_URL = "http://localhost:1337";
 
 /**
@@ -53,7 +53,7 @@ function onNewToken(tokenObject) {
     const { token } = tokenObject;
     Storage.saveToken(token);
     const user = parseUser(token);
-    hooks.user(user);
+    HooksManager.fire('user', user);
 }
 
 function logout() {
@@ -66,12 +66,11 @@ function logout() {
             }
         });
     }
-    hooks.user(null);
+    HooksManager.fire('user', null);
 }
 
 function getStrageUser() {
     const token = Storage.getToken();
-    console.log('!');
     return token && parseUser(token);
 }
 

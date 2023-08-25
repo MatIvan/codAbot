@@ -1,3 +1,4 @@
+//@ts-check
 import React, { useState } from 'react';
 import './App.css';
 
@@ -6,15 +7,25 @@ import UserForm from '../UserForm/UserForm'
 import Navigator from '../Navigator/Navigator'
 
 import AuthService from '../../services/AuthService';
-import { hooks } from '../../services/HooksManager';
+import HooksManager from '../../services/HooksManager';
+import NavigatorService from '../../services/NavigatorService';
 
 function App() {
   const [user, setUser] = useState(AuthService.getStrageUser());
-  hooks.user = setUser;
+  HooksManager.setHook('user', setUser);
+
+  const [page, setPage] = useState('HOME');
+  HooksManager.setHook('navigator.page', setPage);
+
+  const pages = NavigatorService.getPages(user?.roles);
 
   return (
     <div>
-      <Navigator userRoles={user?.roles} />
+      <Navigator
+        selectedPage={page}
+        pages={pages}
+        onPageClickHandler={NavigatorService.onPage} />
+
       {user ? (
         <UserForm
           user={user}
