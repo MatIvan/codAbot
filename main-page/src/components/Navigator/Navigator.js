@@ -1,8 +1,11 @@
 //@ts-check
 import React from 'react';
 import './Navigator.css';
+import NavigatorService from '../../services/NavigatorService';
 
-function Navigator({ selectedPage, pages, onPageClickHandler }) {
+function Navigator({ roles, selectedPage, onPageClickHandler }) {
+    const pages = NavigatorService.getPages(roles);
+
     const links = pages.map(page => {
         const postfix = page === selectedPage ? 'navigator-link-selected' : '';
         return (

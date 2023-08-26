@@ -69,7 +69,7 @@ function logout() {
     HooksManager.fire('user', null);
 }
 
-function getStrageUser() {
+function getStorageUser() {
     const token = Storage.getToken();
     return token && parseUser(token);
 }
@@ -77,5 +77,5 @@ function getStrageUser() {
 export default {
     login,
     logout,
-    getStrageUser,
+    getStorageUser,
 }

@@ -7,7 +7,7 @@ function UserForm({ user, onLogoutClick }) {
             <h1>Hello, {user.name}!</h1>
             <ul>
                 <li><b>Login: </b>{user.login}</li>
-                <li><b>Roles: </b>{user.roles}</li>
+                <li><b>Roles: </b>{user.roles.join(', ')}</li>
             </ul>
             <button
                 className='submit-btn'

@@ -2,67 +2,41 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import LoginForm from '../LoginForm/LoginForm'
-import UserForm from '../UserForm/UserForm'
 import Navigator from '../Navigator/Navigator'
-
+import UserPanel from '../UserPanel/UserPanel'
 import AuthService from '../../services/AuthService';
 import HooksManager from '../../services/HooksManager';
 import NavigatorService from '../../services/NavigatorService';
-import Admin from '../Admin/Admin';
 import TopPanel from '../TopPanel/TopPanel';
-
-const pageComponents = {
-  HOME: ({ user }) => {
-    return (<div>Wellcome!</div>)
-  },
-  ADMIN: ({ page }) => {
-    return (<Admin
-      page={page} />)
-  }
-}
-
-function getPage(page, data) {
-  if (typeof pageComponents[page] === 'function') {
-    return pageComponents[page](data)
-  }
-  return (
-    <div className='form'>ERROR</div>
-  )
-}
+import Content from '../Content/Content';
 
 function App() {
-  const [user, setUser] = useState(AuthService.getStrageUser());
+  const [user, setUser] = useState(AuthService.getStorageUser());
   HooksManager.setHook('user', setUser);
 
   const [page, setPage] = useState('HOME');
   HooksManager.setHook('navigator.page', setPage);
 
-  const pages = NavigatorService.getPages(user?.roles);
+  if (!user && page != 'HOME') {
+    NavigatorService.onPage('HOME');
+  }
 
   return (
     <div className='body-grid'>
       <div className='body-grid-navigator'>
         <Navigator
+          roles={user?.roles}
           selectedPage={page}
-          pages={pages}
           onPageClickHandler={NavigatorService.onPage} />
       </div>
       <div className='body-grid-toppanel'>
         <TopPanel />
       </div>
       <div className='body-grid-user'>
-        {user ? (
-          < UserForm
-            user={user}
-            onLogoutClick={() => { AuthService.logout() }} />
-        ) : (
-          <LoginForm
-            onLoginClick={(login, pass) => { AuthService.login(login, pass) }} />
-        )}
+        < UserPanel user={user} />
       </div>
       <div className='body-grid-content'>
-        {getPage(page, { user, page })}
+        <Content page={page} />
       </div>
     </div>
   );
