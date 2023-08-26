@@ -1,15 +1,9 @@
 .login-form {
-    width: 200px;
-    margin: 20px;
-    padding: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
-.login-form label{
-    margin-top: 10px;
+.login-form label {
+    margin-top: 1em;
 }
 
-.submit-btn{
-    margin-top: 20px;
-    width: 100px;
-    align-self: center;
-}

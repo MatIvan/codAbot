@@ -10,7 +10,7 @@ function UserForm({ user, onLogoutClick }) {
                 <li><b>Roles: </b>{user.roles}</li>
             </ul>
             <button
-                className='logout-btn'
+                className='submit-btn'
                 onClick={() => onLogoutClick()}>
                 logout
             </button>

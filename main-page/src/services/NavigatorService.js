@@ -57,7 +57,8 @@ function onPage(page) {
     HooksManager.fire('navigator.page', page);
 }
 
-export default {
+const NavigatorService = {
     getPages,
     onPage,
 }
+export default NavigatorService;
