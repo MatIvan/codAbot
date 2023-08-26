@@ -1,18 +1,18 @@
 //@ts-check
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Admin.css';
 import HooksManager from '../../services/HooksManager';
 
-function Admin({ page }) {
+function Admin() {
     const [gameStatus, setGameStatus] = useState();
     HooksManager.setHook('gameStatus', setGameStatus);
 
-    // page === 'ADMIN'
-    //     ? AdminService.startStatusUpdating()
-    //     : AdminService.stopStatusUpdating();
-    page === 'ADMIN'
-        ? console.log('startStatusUpdating')
-        : console.log('stopStatusUpdating');
+    useEffect(()=>{
+        console.log('start updating');
+        return ()=>{
+            console.log('STOP updating');
+        }
+    })
 
     return (
         <div className='form'>

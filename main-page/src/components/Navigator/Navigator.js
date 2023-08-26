@@ -3,16 +3,16 @@ import React from 'react';
 import './Navigator.css';
 import NavigatorService from '../../services/NavigatorService';
 
-function Navigator({ roles, selectedPage, onPageClickHandler }) {
+function Navigator({ roles, page }) {
     const pages = NavigatorService.getPages(roles);
 
-    const links = pages.map(page => {
-        const postfix = page === selectedPage ? 'navigator-link-selected' : '';
+    const links = pages.map(pageItem => {
+        const postfix = pageItem === page ? 'navigator-link-selected' : '';
         return (
-            <div key={'navi-key-' + page}
+            <div key={'navi-key-' + pageItem}
                 className={'navigator-link ' + postfix}
-                onClick={() => { onPageClickHandler(page) }}>
-                {page}
+                onClick={() => { NavigatorService.onPage(pageItem) }}>
+                {pageItem}
             </div>
         );
     });

@@ -26,8 +26,7 @@ function App() {
       <div className='body-grid-navigator'>
         <Navigator
           roles={user?.roles}
-          selectedPage={page}
-          onPageClickHandler={NavigatorService.onPage} />
+          page={page} />
       </div>
       <div className='body-grid-toppanel'>
         <TopPanel />
