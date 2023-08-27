@@ -1,0 +1,8 @@
+.logbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.logline {
+    font-size: 1em;
+}

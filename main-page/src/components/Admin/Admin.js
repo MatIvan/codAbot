@@ -1,25 +1,25 @@
 //@ts-check
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Admin.css';
-import HooksManager from '../../services/HooksManager';
+import AdminService from '../../services/AdminService';
+import AdminControl from './AdminControl/AdminControl';
+import AdminLogWrap from './AdminLog/AdminLogWrap';
+import WorldStateWrap from './WorldStatePanel/WorldStateWrap';
 
 function Admin() {
-    const [gameStatus, setGameStatus] = useState();
-    HooksManager.setHook('gameStatus', setGameStatus);
 
-    useEffect(()=>{
-        console.log('start updating');
-        return ()=>{
-            console.log('STOP updating');
+    useEffect(() => {
+        AdminService.updatingStart();
+        return () => {
+            AdminService.updatingStop();
         }
     })
 
     return (
         <div className='form'>
-            ADMIN
-            {/* <GameStatusPanel
-                status={gameStatus} />
-            <AdminApiPanel /> */}
+            <WorldStateWrap />
+            <AdminControl />
+            <AdminLogWrap />
         </div>
     );
 }

@@ -10,4 +10,5 @@ body {
 
 button {
   font-family: monospace;
+  cursor: pointer;
 }

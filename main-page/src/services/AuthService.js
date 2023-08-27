@@ -35,7 +35,11 @@ function parseUser(token) {
  */
 function login(login, password) {
     AuthApi.login(login, password)
-        .then(onNewToken);
+        .then(onNewToken)
+        .catch((e) => {
+            Storage.cleanToken();
+            HooksManager.fire('user', null);
+        });
 }
 
 /**

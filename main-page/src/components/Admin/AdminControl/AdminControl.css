@@ -1,0 +1,7 @@
+.admin-control-ui {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1em;
+    margin-top: 1em;
+}

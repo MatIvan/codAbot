@@ -3,12 +3,12 @@ import asyncHandler from "express-async-handler";
 import Game from '../../game/game.mjs';
 
 export const index = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Site Home Page");
+    res.json("NOT IMPLEMENTED: Site Home Page");
 });
 
 export const start = asyncHandler(async (req, res, next) => {
     Game.start();
-    res.send('game started.');
+    res.json('game started.');
 });
 
 export const stop = asyncHandler(async (req, res, next) => {

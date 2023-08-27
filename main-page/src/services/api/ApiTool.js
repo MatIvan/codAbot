@@ -34,7 +34,7 @@ function sendGet(uri) {
 /**
  * @param {string} uri
  * @param {RequestInit} opt
- * @returns {Promise<any>}
+ * @returns {Promise<void> | Promise<any>}
  */
 function fetchJson(uri, opt) {
     return fetch(BASE_URL + uri, opt)
@@ -43,7 +43,8 @@ function fetchJson(uri, opt) {
             if (!txt || txt.length < 3) {
                 return Promise.resolve();
             }
-            return Promise.resolve(JSON.parse(txt));
+            let json = JSON.parse(txt);
+            return Promise.resolve(json);
         })
 }
 

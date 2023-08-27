@@ -28,9 +28,7 @@ function getPage(page, data) {
 function Content({ page }) {
 
   return (
-    <div>
-      {getPage(page, { page })}
-    </div>
+    getPage(page, { page })
   );
 }
 
