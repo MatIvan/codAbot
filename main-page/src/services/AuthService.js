@@ -1,18 +1,17 @@
 //@ts-check
 import Storage from './StorageService';
 import HooksManager from './HooksManager';
-const BASE_URL = "http://localhost:1337";
-
-/**
- * @typedef {object} TokenObject
- * @property {string} token
- */
+import AuthApi from './api/AuthApi';
 
 /**
  * @typedef {object} User
  * @property {string} login
  * @property {string} name
  * @property {string[]} roles
+ */
+
+/**
+ * @typedef {import('./api/AuthApi').TokenObject} TokenObject
  */
 
 /**
@@ -35,14 +34,7 @@ function parseUser(token) {
  * @param {string} password
  */
 function login(login, password) {
-    fetch(BASE_URL + '/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ login, password })
-    })
-        .then(resp => resp.json())
+    AuthApi.login(login, password)
         .then(onNewToken);
 }
 
@@ -57,15 +49,8 @@ function onNewToken(tokenObject) {
 }
 
 function logout() {
-    const token = Storage.getToken();
+    AuthApi.logout();
     Storage.cleanToken();
-    if (token) {
-        fetch(BASE_URL + '/api/logout', {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
-    }
     HooksManager.fire('user', null);
 }
 
@@ -74,8 +59,9 @@ function getStorageUser() {
     return token && parseUser(token);
 }
 
-export default {
+const AuthService = {
     login,
     logout,
     getStorageUser,
 }
+export default AuthService;
