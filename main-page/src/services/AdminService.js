@@ -31,7 +31,7 @@ const logs = [];
 function log(msg) {
     console.log('AdminService: ' + msg);
     logs.push(msg);
-    HooksManager.fire('admin.logs', logs);
+    HooksManager.fire('admin.logs', [...logs]);
 }
 
 function start() {

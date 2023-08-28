@@ -1,6 +1,12 @@
 .logbox {
     display: flex;
     flex-direction: column;
+    height: 20em;
+    overflow-y: scroll;
+    background-color: white;
+    border: solid 1px;
+    padding: 0.5em;
+    margin-top: 1em;
 }
 
 .logline {
