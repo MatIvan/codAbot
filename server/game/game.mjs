@@ -44,6 +44,9 @@ function clearWorld() {
 }
 
 function start() {
+    if (state.status === 'START') {
+        throw new Error('Game allready started.');
+    }
     log.info('start');
     loadWorld();
     state.tick = 0;

@@ -7,8 +7,12 @@ export const index = asyncHandler(async (req, res, next) => {
 });
 
 export const start = asyncHandler(async (req, res, next) => {
-    Game.start();
-    res.json('game started.');
+    try {
+        Game.start();
+        res.json('game started.');
+    } catch (e) {
+        res.status(400).json(e.message).end();
+    }
 });
 
 export const stop = asyncHandler(async (req, res, next) => {

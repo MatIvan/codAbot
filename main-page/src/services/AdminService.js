@@ -36,7 +36,8 @@ function log(msg) {
 
 function start() {
     AdminApi.start()
-        .then(() => { log('Game start.') })
+        .then(msg => log('Game start:' + msg))
+        .catch(err => log('Game start:' + err))
 }
 
 function stop() {
