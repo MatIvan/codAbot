@@ -38,24 +38,21 @@ function sendGet(uri) {
  */
 function fetchJson(uri, opt) {
     return fetch(BASE_URL + uri, opt)
-        .then(okOnly)
-        .then(json)
-}
-
-function json(resp) {
-    return resp.text()
-        .then(txt => {
-            if (!txt || txt.length < 3) {
-                return Promise.resolve();
-            }
-            let json = JSON.parse(txt);
-            return Promise.resolve(json);
+        .then(resp => {
+            const ok = resp.ok;
+            return resp.text().then(txt => {
+                if (!ok) throw new Error(txt);
+                return parse(txt);
+            });
         })
 }
 
-function okOnly(resp) {
-    if (resp.ok) return resp;
-    return resp.text().then(txt => { throw new Error(txt) });
+function parse(txt) {
+    if (!txt || txt.length < 3) {
+        return Promise.resolve();
+    }
+    const json = JSON.parse(txt);
+    return Promise.resolve(json);
 }
 
 /**

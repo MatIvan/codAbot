@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import './Admin.css';
 import AdminService from '../../services/AdminService';
-import AdminControl from './AdminControl/AdminControl';
 import AdminLogWrap from './AdminLog/AdminLogWrap';
 import WorldStateWrap from './WorldStatePanel/WorldStateWrap';
 
@@ -18,7 +17,6 @@ function Admin() {
     return (
         <div className='form'>
             <WorldStateWrap />
-            <AdminControl />
             <AdminLogWrap />
         </div>
     );
