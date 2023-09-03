@@ -17,7 +17,7 @@ function App() {
   const [page, setPage] = useState('HOME');
   HooksManager.setHook('navigator.page', setPage);
 
-  if (!user && page != 'HOME') {
+  if (!user && page !== 'HOME') {
     NavigatorService.onPage('HOME');
   }
 

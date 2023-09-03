@@ -26,7 +26,8 @@ function fire(name, value) {
     hooksMap[name] && hooksMap[name](value);
 }
 
-export default {
+const HooksManager = {
     setHook,
     fire
 };
+export default HooksManager;

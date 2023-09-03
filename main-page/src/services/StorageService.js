@@ -17,8 +17,9 @@ function cleanToken() {
     return sessionStorage.removeItem(TOKEN);
 }
 
-export default {
+const StorageService = {
     saveToken,
     getToken,
     cleanToken
 }
+export default StorageService;

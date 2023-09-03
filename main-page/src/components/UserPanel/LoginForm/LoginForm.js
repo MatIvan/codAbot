@@ -21,7 +21,7 @@ function LoginForm({ onLoginClick }) {
             <label htmlFor="userPass">Password</label>
             <input
                 id="userPass"
-                type="text"
+                type="password"
                 onChange={e => setPassword(e.target.value)} />
             <button className='submit-btn' type="submit">Login</button>
         </form>

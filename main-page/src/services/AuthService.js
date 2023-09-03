@@ -2,6 +2,8 @@
 import Storage from './StorageService';
 import HooksManager from './HooksManager';
 import AuthApi from './api/AuthApi';
+import CryptoJs from 'crypto-js';
+import Sha256 from 'crypto-js/sha256';
 
 /**
  * @typedef {object} User
@@ -34,12 +36,24 @@ function parseUser(token) {
  * @param {string} password
  */
 function login(login, password) {
-    AuthApi.login(login, password)
+    const secPass = encode(login, password);
+    AuthApi.login(login, secPass)
         .then(onNewToken)
         .catch((e) => {
             Storage.cleanToken();
             HooksManager.fire('user', null);
         });
+}
+
+
+/**
+ * @param {string} login
+ * @param {string} password
+ * @returns {string}
+ */
+function encode(login, password) {
+    return Sha256(login + ":" + password)
+        .toString(CryptoJs.enc.Base64);
 }
 
 /**
