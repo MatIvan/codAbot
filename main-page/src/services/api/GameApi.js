@@ -1,9 +1,9 @@
 //@ts-check
+///<reference path='../../Types.js'/>
 import ApiTool from './ApiTool';
-import * as TYPE from './ApiObjects';
 
 /**
- * @returns {Promise<TYPE.WorldState>}
+ * @returns {Promise<WorldState>}
  */
 function status() {
     return ApiTool.sendPost('/game/api/status');

@@ -1,6 +1,10 @@
 /**
+ * @typedef {'STOP' | 'START'} State
+  */
+
+/**
  * @typedef {object} WorldState
- * @property  {'STOP' | 'START'} status
+ * @property  {State} status
  * @property  {number} tick
  */
 
@@ -8,5 +12,3 @@
  * @typedef {object} TokenObject
  * @property {string} token
  */
-
-export const unused = {};

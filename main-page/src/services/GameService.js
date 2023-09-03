@@ -1,18 +1,20 @@
 //@ts-check
-import GameApi from "./api/GameApi";
+///<reference path='../Types.js'/>
 
-const CELL_SIZE = 8;
-const UPDATE_MS = 1000;
+import GameApi from "./api/GameApi";
+import Engine from "../engine/Engine";
+
+const UPDATE_MS = 300;
 let timer;
 
-function updatingStart() {
-    const canva = document.getElementById('game-filed');
-    if (!canva) {
-        return console.error('Have not canva !!!');
-    }
-    canva.width = 30 * CELL_SIZE;
-    canva.height = 30 * CELL_SIZE;
+/** @type {WorldState} */
+let lastState = {
+    status: "STOP",
+    tick: -1
+}
 
+function updatingStart() {
+    Engine.show();
     if (!timer) {
         console.log('GameService: updating started.');
         timer = setInterval(update, UPDATE_MS);
@@ -25,34 +27,36 @@ function updatingStop() {
     console.log('GameService: updating stoped.');
     clearInterval(timer);
     timer = null;
+    Engine.hide();
 }
 
 function update() {
     GameApi.status()
         .then((worldState) => {
             console.log('GameStatus: ', worldState);
+            processSatus(worldState);
         });
-    GameApi.world()
-        .then(world => { drawWorld(world) });
 }
 
-function drawWorld(world) {
-    const canva = document.getElementById('game-filed');
-    if (!canva) {
-        return console.error('Have not canva !!!');
+/**
+ * @param {WorldState} worldState
+*/
+function processSatus(worldState) {
+    const { tick, status } = lastState;
+    lastState = worldState;
+
+    if (worldState.status === 'START') {
+        if (tick < worldState.tick) {
+            GameApi.world().then(world => { Engine.tick(world) });
+        }
+
+    } else if (worldState.status === 'STOP') {
+        if (status === 'START') {
+            Engine.tick(null);
+        }
     }
 
-    let ctx = canva.getContext("2d");
-    ctx.clearRect(0, 0, canva.width, canva.height);
-    world.map((rowArr, row) => {
-        rowArr.map((value, col) => {
-            if (value === 1) {
-                ctx.fillRect(row * CELL_SIZE, col * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-            }
-        })
-    })
 }
-
 const GameService = {
     updatingStart,
     updatingStop

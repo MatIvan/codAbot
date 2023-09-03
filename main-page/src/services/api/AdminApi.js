@@ -1,5 +1,6 @@
 //@ts-check
-import * as TYPE from './ApiObjects';
+///<reference path='../../Types.js'/>
+
 import ApiTool from './ApiTool';
 
 /**
@@ -17,7 +18,7 @@ function stop() {
 }
 
 /**
- * @returns {Promise<TYPE.WorldState>}
+ * @returns {Promise<WorldState>}
  */
 function status() {
     return ApiTool.sendPost('/admin/api/status');
