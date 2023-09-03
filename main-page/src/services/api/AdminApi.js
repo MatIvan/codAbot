@@ -1,11 +1,6 @@
 //@ts-check
+import * as TYPE from './ApiObjects';
 import ApiTool from './ApiTool';
-
-/**
- * @typedef {object} WorldState
- * @property  {'STOP' | 'START'} status
- * @property  {number} tick
- */
 
 /**
  * @returns {Promise<any>}
@@ -22,7 +17,7 @@ function stop() {
 }
 
 /**
- * @returns {Promise<WorldState>}
+ * @returns {Promise<TYPE.WorldState>}
  */
 function status() {
     return ApiTool.sendPost('/admin/api/status');

@@ -3,16 +3,17 @@ import React from 'react';
 import './Content.css';
 
 import Admin from '../Admin/Admin';
+import Game from '../Game/Game';
 
 const pageComponents = {
   HOME: () => {
     return (<div className='form'>Wellcome!</div>)
   },
-  ADMIN: ({ page }) => {
+  ADMIN: () => {
     return (<Admin />)
   },
   GAME: () => {
-    return (<div className='form'>GAME</div>)
+    return (<div className='form'><Game/></div>)
   },
 }
 
