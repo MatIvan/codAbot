@@ -90,6 +90,6 @@ class Logger {
     }
 }
 
-export {
+export default {
     getLogger,
 };

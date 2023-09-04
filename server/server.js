@@ -8,8 +8,8 @@ import adminRouter from './rest/routers/adminRouter.mjs';
 import gameRouter from './rest/routers/gameRouter.mjs';
 import apiRouter from './rest/routers/apiRouter.mjs';
 
-import { getLogger } from './libs/log.mjs';
-const log = getLogger('SERVER');
+import Logger from './libs/log.js';
+const log = Logger.getLogger('SERVER');
 
 var app = express();
 app.use(cors());

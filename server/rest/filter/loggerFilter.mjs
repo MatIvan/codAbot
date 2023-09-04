@@ -1,7 +1,7 @@
 //@ts-check
-import { getLogger } from '../../libs/log.mjs';
+import Logger from '../../libs/log.js';
 
-const log = getLogger({
+const log = Logger.getLogger({
     loggerName: 'ACCESS',
     fileName: 'access.log',
     needConlose: true,

@@ -1,8 +1,10 @@
 //@ts-check
-import { getUserByLogin } from '../../repository/db.mjs';
+///<reference path='../../repository/Entities.js'/>
+
+import DB from '../../repository/DB';
 import JWT from 'jsonwebtoken';
-import { getLogger } from '../../libs/log.mjs';
-const log = getLogger('AUTH');
+import Logger from '../../libs/log.js';
+const log = Logger.getLogger('AUTH');
 
 /**
  * @typedef {import("express").Request} Request
@@ -12,9 +14,8 @@ const log = getLogger('AUTH');
  */
 
 /**
- * @typedef {import("../../repository/db.mjs").Role} Role
- * @typedef {import("../../services/userService.mjs").Token} Token
- * @typedef {import("../../services/userService.mjs").TokenPayload} TokenPayload
+ * @typedef {import("../../services/UserCredentialService.mjs").Token} Token
+ * @typedef {import("../../services/UserCredentialService.mjs").TokenPayload} TokenPayload
  */
 
 /**
@@ -62,7 +63,7 @@ function getUserByToken(req, require) {
         const payloadRaw = JWT.verify(authSecret, 'SuperAdminParol');
         // @ts-ignore
         const payload = payloadRaw.payload;
-        return getUserByLogin(payload.login);
+        return DB.users.getByLogin(payload.login);
     } catch (e) {
         if (require) {
             log.error('getUserByToken:', e);

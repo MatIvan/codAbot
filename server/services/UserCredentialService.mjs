@@ -1,14 +1,11 @@
 //@ts-check
-import { getUserByLogin } from '../repository/db.mjs';
+///<reference path='../repository/Entities.js'/>
+
+import DB from '../repository/DB.js'; '../repository/db';
 import JWT from 'jsonwebtoken';
 const { sign } = JWT;
-import { getLogger } from '../libs/log.mjs';
-const log = getLogger('UserService');
-
-/**
- * @typedef {import('../repository/db.mjs').Role} Role;
- * @typedef {import('../repository/db.mjs').UserEntity} UserEntity;
- */
+import Logger from '../libs/log.js';
+const log = Logger.getLogger('UserCredentialService');
 
 /**
  * @typedef {object} UserCredential
@@ -46,7 +43,7 @@ function login(userCredential) {
         usersOnline.delete(userLogin);
     };
 
-    const userEntity = getUserByLogin(userLogin);
+    const userEntity = DB.users.getByLogin(userLogin);
     if (!userEntity) {
         throw new Error(`User not found: ` + userLogin);
     }
@@ -75,7 +72,7 @@ function logout(userLogin) {
 }
 
 /**
- * @param {UserEntity} userEntity
+ * @param {User} userEntity
  * @returns {string} tokenRaw
  */
 function generateRawToken(userEntity) {

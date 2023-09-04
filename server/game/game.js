@@ -1,7 +1,7 @@
 //@ts-check
-import { getBlocks } from '../repository/db.mjs';
-import { getLogger } from '../libs/log.mjs';
-const log = getLogger('GAME');
+import DB from '../repository/DB.js';
+import Logger from '../libs/log.js';
+const log = Logger.getLogger('GAME');
 
 const TICK_TIMER_MS = 1000;
 const WORL_SIZE = 30;
@@ -28,7 +28,7 @@ var timeoutID;
 function loadWorld() {
     log.info('loadWorld');
     clearWorld();
-    getBlocks().map(([x, y, type]) => {
+    DB.getBlocks().map(([x, y, type]) => {
         world[x][y] = type;
     })
 }

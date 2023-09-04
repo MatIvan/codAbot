@@ -1,17 +1,15 @@
 //@ts-check
-import UserService from '../../services/userService.mjs'
-import asyncHandler from "express-async-handler";
-import { getLogger } from '../../libs/log.mjs';
-const log = getLogger('API');
+///<reference path='../../repository/Entities.js'/>
 
-/**
- * @typedef {import('../../services/userService.mjs').UserEntity } UserEntity
- */
+import UserCredentialService from '../../services/UserCredentialService.mjs'
+import asyncHandler from "express-async-handler";
+import Logger from '../../libs/log.js';
+const log = Logger.getLogger('API');
 
 export const login = asyncHandler(async (req, res, next) => {
     let token;
     try {
-        token = UserService.login(req.body);
+        token = UserCredentialService.login(req.body);
     } catch (e) {
         log.error('Auth error: ', e.message);
         res.status(401).end('Access deny.');
@@ -21,8 +19,8 @@ export const login = asyncHandler(async (req, res, next) => {
 });
 
 export const logout = asyncHandler(async (req, res, next) => {
-    /** @type {UserEntity} */
+    /** @type {User} */
     const user = req['user'];
-    UserService.logout(user?.login);
+    UserCredentialService.logout(user?.login);
     res.status(user ? 200 : 404).end();
 });

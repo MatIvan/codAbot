@@ -1,6 +1,6 @@
 //@ts-check
 import asyncHandler from "express-async-handler";
-import Game from '../../game/game.mjs';
+import Game from '../../game/game.js';
 
 export const index = asyncHandler(async (req, res, next) => {
     res.json("NOT IMPLEMENTED: Site Home Page");
