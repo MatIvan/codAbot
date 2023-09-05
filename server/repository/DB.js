@@ -1,7 +1,7 @@
 //@ts-check
-import RepoUser from './RepoUser'
-import RepoBot from './RepoBot'
-import RepoScript from './RepoScript'
+import RepoUser from './RepoUser.js'
+import RepoBot from './RepoBot.js'
+import RepoScript from './RepoScript.js'
 
 // x, y, type
 const blocks = [
