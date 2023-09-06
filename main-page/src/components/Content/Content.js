@@ -4,10 +4,11 @@ import './Content.css';
 
 import Admin from '../Admin/Admin';
 import Game from '../Game/Game';
+import Home from '../Home/Home';
 
 const pageComponents = {
   HOME: () => {
-    return (<div className='form'>Wellcome!</div>)
+    return (<Home/>)
   },
   ADMIN: () => {
     return (<Admin />)
