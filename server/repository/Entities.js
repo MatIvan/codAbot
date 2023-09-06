@@ -26,3 +26,9 @@
  * @property {number} userId
  * @property {string} body
  */
+
+/**
+ * @typedef {object} ScriptInfo
+ * @property {number} id
+ * @property {string} name
+ */
