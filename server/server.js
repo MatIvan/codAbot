@@ -13,6 +13,7 @@ import gameRouter from './rest/routers/gameRouter.mjs';
 import userRouter from './rest/routers/UserRouter.js';
 import apiRouter from './rest/routers/apiRouter.mjs';
 import ScriptRouter from './rest/routers/ScriptRouter.js';
+import BotRouter from './rest/routers/BotRouter.js';
 
 import Logger from './libs/log.js';
 const log = Logger.getLogger('SERVER');
@@ -35,6 +36,7 @@ app.use('/admin/api', adminRouter);
 app.use('/users*', UserFilter.needActiveUser);
 app.use('/users', userRouter);
 app.use('/users/scripts', ScriptRouter);
+app.use('/users/bots', BotRouter);
 
 app.use(restErrorHandler);
 

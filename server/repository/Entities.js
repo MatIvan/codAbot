@@ -20,6 +20,12 @@
  */
 
 /**
+ * @typedef {object} BotInfo
+ * @property {number} id
+ * @property {string} name
+ */
+
+/**
  * @typedef {object} Script
  * @property {number} id
  * @property {string} name
